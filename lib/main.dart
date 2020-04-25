@@ -21,23 +21,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: GradientAppBar(
-        title: Text(
-          '1Louve Sport',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            // fontStyle: FontStyle.italic
-          ),
+  int theirGroupValue = 0;
+
+  checkWidget(int index) {
+    if (index == 0) {
+      return Center(
+        child: Text(
+          "Text: my event page here",
+          style: TextStyle(color: Colors.blueAccent, fontSize: 20.0),
         ),
-        backgroundColorStart: Colors.greenAccent[300],
-        backgroundColorEnd: Colors.green[200],
-      ),
-      body: Center(
+      );
+    } else {
+      return Center(
         child: Container(
             decoration: BoxDecoration(
                 boxShadow: [
@@ -274,7 +269,52 @@ class _HomePageState extends State<HomePage> {
                     // )
                   );
                 })),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: GradientAppBar(
+        title: Text(
+          '1Louve Sport',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            // fontStyle: FontStyle.italic
+          ),
+        ),
+        backgroundColorStart: Colors.greenAccent[300],
+        backgroundColorEnd: Colors.green[200],
+        bottom: PreferredSize(
+            child: Padding(
+              padding: EdgeInsets.only(top: 5.0, bottom: 10.0),
+              child: Row(
+                children: <Widget>[
+                  // SizedBox(
+                  //   width: 30.0,
+                  // ),
+                  Expanded(
+                      child: CupertinoSegmentedControl(
+                    groupValue: theirGroupValue,
+                    onValueChanged: (changeValue) {
+                      setState(() {
+                        theirGroupValue = changeValue;
+                      });
+                    },
+                    children: {
+                      0: Text('MY EVENTS'),
+                      1: Text('ALL'),
+                    },
+                  ))
+                ],
+              ),
+            ),
+            preferredSize: Size(double.infinity, 45.0)),
       ),
+      body: checkWidget(theirGroupValue),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.all(0),
@@ -318,7 +358,7 @@ class SegmentContainer extends StatelessWidget {
     return Container(
       width: 500,
       child: CupertinoSegmentedControl<int>(
-        selectedColor: Colors.blue,
+        selectedColor: Colors.greenAccent,
         borderColor: Colors.white,
         children: {
           0: Text('MY EVENTS'),
